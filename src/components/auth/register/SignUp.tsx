@@ -4,6 +4,7 @@ import Button from "@/components/custom/Button";
 import InputField from "@/components/custom/form/InputField";
 import { useState } from "react";
 import { z } from "zod";
+import toast from "react-hot-toast";
 
 // Definir esquema de validación con Zod
 const schema = z.object({
@@ -39,6 +40,7 @@ const SignUp = () => {
         formErrors[err.path[0] as "email" | "password"] = err.message;
       });
       setErrors(formErrors);
+      toast.error("Por favor, corrige los errores en el formulario.");
       return;
     }
 
@@ -52,9 +54,10 @@ const SignUp = () => {
 
       if (!response.ok) throw new Error("Error en el registro");
 
-      alert("Registro exitoso");
+      toast.success("Registro exitoso");
+      setFormData({ email: "", password: "" }); // Limpiar el formulario tras el éxito
     } catch {
-      alert("Hubo un problema con el registro");
+      toast.error("Hubo un problema con el registro");
     } finally {
       setIsLoading(false);
     }

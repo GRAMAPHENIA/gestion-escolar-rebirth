@@ -128,3 +128,4 @@
 `npm install -D tailwindcss postcss autoprefixer`
 `npm install lucide-react`
 `npm install zod`
+`npm install react-hot-toast`
