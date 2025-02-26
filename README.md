@@ -1,121 +1,124 @@
 # DOCUMENTACION
-*Sitio oficial, Gestion Escolar.*
+
+_Sitio oficial, Gestion Escolar._
 
 ### Estructura del sitio
 
 ```
 📂 src/
-│──📂 app/                             # Rutas y páginas de Next.js
-│   ├──📂 (routes)/
+│──📂 app/
+│   ├──📂 api/
+│   │   │   ├──📂 register/
+│   │   │   │   ├──📄 route.ts
 │   │   ├──📂 instituciones/
-│   │   │   ├──📂 [id]/                # Ruta dinámica para detalles de institución
-│   │   │   │   ├──📄 page.tsx    ✅     # Detalles de una institución específica
-│   │   │   ├──📂 nueva/               # Ruta para crear una nueva institución
-│   │   │   │   ├──📄 page.tsx         # Formulario para crear institución
-│   │   │   ├──📄 page.tsx             # Página principal de instituciones
+│   │   │   ├──📂 [id]/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📂 nueva/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 alumnos/
-│   │   │   ├──📂 [id]/           ✅     # Ruta dinámica para detalles de alumno
-│   │   │   │   ├──📄 page.tsx    ✅     # Detalles de un alumno específico
-│   │   │   ├──📂 nuevo/          ✅     # Ruta para registrar un nuevo alumno
-│   │   │   │   ├──📄 page.tsx    ✅     # Formulario para registrar alumno
-│   │   │   ├──📄 page.tsx        ✅     # Página principal de alumnos
+│   │   │   ├──📂 [id]/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📂 nuevo/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 asistencia/
-│   │   │   ├──📂 [id]/           ✅     # Ruta dinámica para detalles de asistencia
-│   │   │   │   ├──📄 page.tsx    ✅     # Detalles de asistencia específica
-│   │   │   ├──📄 page.tsx        ✅     # Página principal de asistencia
+│   │   │   ├──📂 [id]/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 estadisticas/
-│   │   │   ├──📂 rendimiento/    ✅     # Ruta para estadísticas de rendimiento
-│   │   │   │   ├──📄 page.tsx    ✅     # Estadísticas de rendimiento académico
-│   │   │   ├──📂 asistencia/     ✅     # Ruta para estadísticas de asistencia
-│   │   │   │   ├──📄 page.tsx    ✅     # Estadísticas de asistencia
-│   │   │   ├──📄 page.tsx        ✅     # Página principal de estadísticas
+│   │   │   ├──📂 rendimiento/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📂 asistencia/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 normativas/
-│   │   │   ├──📂 [id]/           ✅     # Ruta dinámica para detalles de normativa
-│   │   │   │   ├──📄 page.tsx    ✅     # Detalles de una normativa específica
-│   │   │   ├──📂 nueva/          ✅     # Ruta para crear una nueva normativa
-│   │   │   │   ├──📄 page.tsx    ✅     # Formulario para crear normativa
-│   │   │   ├──📄 page.tsx        ✅     # Página principal de normativas
+│   │   │   ├──📂 [id]/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📂 nueva/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 notificaciones/
-│   │   │   ├──📂 configuracion/  ✅     # Ruta para configurar notificaciones
-│   │   │   │   ├──📄 page.tsx    ✅     # Configuración de notificaciones
-│   │   │   ├──📄 page.tsx        ✅     # Página principal de notificaciones
+│   │   │   ├──📂 configuracion/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 mensajeria/
-│   │   │   ├──📂 nuevo/          ✅     # Ruta para enviar un nuevo mensaje
-│   │   │   │   ├──📄 page.tsx    ✅     # Formulario para enviar mensaje
-│   │   │   ├──📄 page.tsx        ✅     # Página principal de mensajería
+│   │   │   ├──📂 nuevo/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 calendario/
-│   │   │   ├──📂 evento/         ✅     # Ruta para crear un nuevo evento
-│   │   │   │   ├──📄 page.tsx    ✅     # Formulario para crear evento
-│   │   │   ├──📄 page.tsx        ✅     # Página principal de calendario
+│   │   │   ├──📂 evento/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📄 page.tsx
 │   │   ├──📂 auth/
-│   │   │   ├──📂 login/          ✅     # Ruta para iniciar sesión
-│   │   │   │   ├──📄 page.tsx    ✅     # Formulario de inicio de sesión
-│   │   │   ├──📂 register/       ✅     # Ruta para registrarse
-│   │   │   │   ├──📄 page.tsx    ✅     # Formulario de registro
-│   │   │   ├──📂 logout/         ✅     # Ruta para cerrar sesión
-│   │   │   │   ├──📄 page.tsx    ✅     # Página de cierre de sesión
-│   │   │   ├──📂 two-factor/     ✅     # Ruta para autenticación de dos factores
-│   │   │   │   ├──📄 page.tsx    ✅     # Formulario de autenticación de dos factores
-│──📂 components/                      # Componentes reutilizables
+│   │   │   ├──📂 login/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📂 register/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📂 logout/
+│   │   │   │   ├──📄 page.tsx
+│   │   │   ├──📂 two-factor/
+│   │   │   │   ├──📄 page.tsx
+│──📂 components/
 │   ├──📂 auth/
-│   │   ├──📄 LoginForm.tsx            # Formulario de inicio de sesión
-│   │   ├──📄 RegisterForm.tsx         # Formulario de registro
-│   │   ├──📄 LogoutButton.tsx         # Botón de cierre de sesión
-│   │   ├──📄 TwoFactorAuth.tsx        # Autenticación de dos factores
+│   │   ├──📄 LoginForm.tsx
+│   │   ├──📄 RegisterForm.tsx
+│   │   ├──📄 LogoutButton.tsx
+│   │   ├──📄 TwoFactorAuth.tsx
 │   ├──📂 institutions/
-│   │   ├──📄 InstitutionList.tsx      # Lista de instituciones
-│   │   ├──📄 InstitutionForm.tsx      # Formulario de instituciones
-│   │   ├──📄 InstitutionCard.tsx      # Tarjeta de institución
+│   │   ├──📄 InstitutionList.tsx
+│   │   ├──📄 InstitutionForm.tsx
+│   │   ├──📄 InstitutionCard.tsx
 │   ├──📂 students/
-│   │   ├──📄 StudentList.tsx          # Lista de alumnos por grado
-│   │   ├──📄 StudentForm.tsx          # Formulario de alumnos
-│   │   ├──📄 StudentCard.tsx          # Tarjeta de alumno
+│   │   ├──📄 StudentList.tsx
+│   │   ├──📄 StudentForm.tsx
+│   │   ├──📄 StudentCard.tsx
 │   ├──📂 attendance/
-│   │   ├──📄 AttendanceTable.tsx      # Tabla de asistencia
-│   │   ├──📄 AttendanceSummary.tsx    # Gráfico de asistencia
-│   │   ├──📄 AttendanceAlerts.tsx     # Alertas de asistencia
+│   │   ├──📄 AttendanceTable.tsx
+│   │   ├──📄 AttendanceSummary.tsx
+│   │   ├──📄 AttendanceAlerts.tsx
 │   ├──📂 stats/
-│   │   ├──📄 OverviewStats.tsx        # Panel de estadísticas generales
-│   │   ├──📄 PerformanceChart.tsx     # Gráfico de rendimiento académico
-│   │   ├──📄 AbsenceStats.tsx         # Estadísticas de asistencia
+│   │   ├──📄 OverviewStats.tsx
+│   │   ├──📄 PerformanceChart.tsx
+│   │   ├──📄 AbsenceStats.tsx
 │   ├──📂 regulations/
-│   │   ├──📄 RegulationList.tsx       # Lista de normativas educativas
-│   │   ├──📄 RegulationDetail.tsx     # Vista detallada de normativas
-│   │   ├──📄 RegulationForm.tsx       # Formulario de normativas
+│   │   ├──📄 RegulationList.tsx
+│   │   ├──📄 RegulationDetail.tsx
+│   │   ├──📄 RegulationForm.tsx
 │   ├──📂 notifications/
-│   │   ├──📄 NotificationList.tsx     # Lista de notificaciones
-│   │   ├──📄 NotificationSettings.tsx # Configuración de notificaciones
+│   │   ├──📄 NotificationList.tsx
+│   │   ├──📄 NotificationSettings.tsx
 │   ├──📂 messaging/
-│   │   ├──📄 MessageList.tsx          # Lista de mensajes
-│   │   ├──📄 MessageComposer.tsx      # Compositor de mensajes
+│   │   ├──📄 MessageList.tsx
+│   │   ├──📄 MessageComposer.tsx
 │   ├──📂 calendar/
-│   │   ├──📄 CalendarView.tsx         # Vista de calendario
-│   │   ├──📄 EventForm.tsx            # Formulario de eventos
+│   │   ├──📄 CalendarView.tsx
+│   │   ├──📄 EventForm.tsx
 │──📂 hooks/
-│   ├──📄 useAuth.ts                   # Hook para autenticación
-│   ├──📄 useInstitutions.ts           # Hook para manejar instituciones
-│   ├──📄 useStudents.ts               # Hook para manejar alumnos
-│   ├──📄 useAttendance.ts             # Hook para manejar asistencia
-│   ├──📄 useNotifications.ts          # Hook para manejar notificaciones
-│   ├──📄 useMessaging.ts              # Hook para manejar mensajería
+│   ├──📄 useAuth.ts
+│   ├──📄 useInstitutions.ts
+│   ├──📄 useStudents.ts
+│   ├──📄 useAttendance.ts
+│   ├──📄 useNotifications.ts
+│   ├──📄 useMessaging.ts
 │──📂 libs/
-│   ├──📄 supabase.ts                  # Configuración de Supabase
-│   ├──📄 auth.ts                      # Funciones de autenticación
-│   ├──📄 api.ts                       # Funciones para interactuar con APIs externas
+│   ├──📄 supabase.ts
+│   ├──📄 auth.ts
+│   ├──📄 api.ts
 │──📂 utils/
-│   ├──📄 formatDate.ts                # Formateo de fechas
-│   ├──📄 calculateAverages.ts         # Cálculo de promedios de calificaciones
-│   ├──📄 calculateAbsences.ts         # Detección de alertas por faltas
-│   ├──📄 exportData.ts                # Exportación de datos a CSV/PDF
-│   ├──📄 cache.ts                     # Funciones de caché
-│──📂 public/                          # Archivos estáticos
-│──📂 types/                           # Definición de tipos (TypeScript)
-│──📂 i18n/                            # Archivos de internacionalización
-│──📄 middleware.ts                    # Middleware de autenticación (opcional)
-│──📄 layout.tsx                       # Layout principal
-│──📄 theme.ts                         # Configuración de temas y personalización
-│──📄 accessibility.ts                 # Configuración de accesibilidad
-│──📄 security.ts                      # Configuración de seguridad
+│   ├──📄 formatDate.ts
+│   ├──📄 calculateAverages.ts
+│   ├──📄 calculateAbsences.ts
+│   ├──📄 exportData.ts
+│   ├──📄 cache.ts
+│──📂 public/
+│──📂 types/
+│──📂 i18n/
+│──📄 middleware.ts
+│──📄 layout.tsx
+│──📄 theme.ts
+│──📄 accessibility.ts
+│──📄 security.ts
 
 
 ```
