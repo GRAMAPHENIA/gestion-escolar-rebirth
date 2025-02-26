@@ -1,8 +1,9 @@
-"use client"; // Asegúrate de que el archivo es tratado como componente del cliente
+"use client";
 
 import Button from "@/components/custom/Button";
 import InputField from "@/components/custom/form/InputField";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // 👈 Para redirigir
 import { z } from "zod";
 import toast from "react-hot-toast";
 
@@ -13,29 +14,23 @@ const schema = z.object({
 });
 
 const SignUp = () => {
+  const router = useRouter(); // 👈 Hook de navegación
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Función que maneja el cambio de los campos de entrada
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
-    setErrors((prev) => ({ ...prev, [id]: "" })); // Limpiar errores cuando el usuario escriba
+    setErrors((prev) => ({ ...prev, [id]: "" }));
   };
 
-  // Función de envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validación con Zod
     const result = schema.safeParse(formData);
-
     if (!result.success) {
-      const formErrors: { email: string; password: string } = {
-        email: "",
-        password: "",
-      };
+      const formErrors = { email: "", password: "" };
       result.error.errors.forEach((err) => {
         formErrors[err.path[0] as "email" | "password"] = err.message;
       });
@@ -46,21 +41,29 @@ const SignUp = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch("/api/autenticacion/registrarse", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Error en el registro");
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.error || "Error en el registro");
 
       toast.success("Registro exitoso");
-      setFormData({ email: "", password: "" }); // Limpiar el formulario tras el éxito
-    } catch {
-      toast.error("Hubo un problema con el registro");
-    } finally {
-      setIsLoading(false);
+
+      // Redirigir al dashboard después de registrarse
+      router.push("/tablero");
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Hubo un problema con el registro"
+      );
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -98,3 +101,10 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+// Este componente gestiona el formulario de registro de usuarios en la aplicación.
+// Utiliza un esquema de validación con Zod para asegurar que los datos ingresados sean correctos.
+// Al enviar el formulario, se realiza una petición a la API de autenticación,
+// la cual crea el usuario en Supabase y lo autentica automáticamente.
+// En caso de éxito, el usuario es redirigido al dashboard; de lo contrario, se muestran mensajes de error.
+// Además, se emplea un sistema de notificaciones para mejorar la experiencia del usuario.

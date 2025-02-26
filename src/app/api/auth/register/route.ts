@@ -2,8 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 export async function POST(request: NextRequest) {
@@ -15,10 +15,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Crear el usuario en Supabase
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
@@ -26,18 +23,36 @@ export async function POST(request: NextRequest) {
 
     const { user } = data;
 
-    // Aquí puedes agregar un paso adicional como crear un registro en una tabla de 'usuarios'
-    // Ejemplo de inserción en la tabla 'users'
-    const { error: dbError } = await supabase.from("users").insert([
-      { email, user_id: user?.id },
-    ]);
+    // Insertar en la tabla 'users'
+    const { error: dbError } = await supabase.from("users").insert([{ email, user_id: user?.id }]);
 
     if (dbError) {
       return NextResponse.json({ error: dbError.message }, { status: 400 });
     }
 
-    return NextResponse.json({ message: "Registro exitoso" }, { status: 200 });
-  } catch {
+    // Iniciar sesión automáticamente después de registrarse
+    const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (loginError) {
+      return NextResponse.json({ error: "Registro exitoso, pero fallo el login" }, { status: 400 });
+    }
+
+    // Configurar cookie de sesión
+    const response = NextResponse.json({ message: "Registro exitoso" }, { status: 200 });
+    response.cookies.set({
+      name: "sb:token",
+      value: sessionData.session?.access_token || "",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      sameSite: "strict",
+    });
+
+    return response;
+  } catch (error) {
     return NextResponse.json({ error: "Error al registrar el usuario" }, { status: 500 });
   }
 }
