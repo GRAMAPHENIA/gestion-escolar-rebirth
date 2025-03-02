@@ -2,9 +2,7 @@
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import ThemeSwitcher from "@/components/custom/ThemeSwitcher";
-import { Toaster } from "react-hot-toast";
 import CustomToaster from "@/components/toast/CustomToast";
-import AuthButton from "@/components/auth/AuthButton/AuthButton";
 // Configuración de fuentes
 const inter = Inter({
   variable: "--font-inter",
@@ -33,9 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${inter.variable} ${playfairDisplay.variable}`}>
       <body className="antialiased">
-        <AuthButton />
         <ThemeSwitcher /> {/* Componente del lado del cliente */}
-        {/* <Toaster position="top-right" /> */}
         <CustomToaster />
         {children}
       </body>
